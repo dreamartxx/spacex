@@ -1,0 +1,6 @@
+{
+  "name": "Gök Atlası - Güneş Sistemi ve Gezegenler Eğitim Portalı",
+  "description": "Ortaokul öğrencileri için MEB müfredatına uygun Güneş, Dünya'nın katmanları, Gezegenler, Uydular, Ay'ın Evreleri, eğitici uzay oyunları ve sınavlar içeren interaktif astronomi sitesi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

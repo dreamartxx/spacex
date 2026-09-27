@@ -1,0 +1,40 @@
+name: Hostinger Otomatik Yayınlama (CI/CD)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-and-deploy:
+    name: Derleme ve Hostinger FTP Dağıtımı
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Kodları GitHub Deposu'ndan Çek
+        uses: actions/checkout@v4
+
+      - name: 2. Node.js Ortamını Kur (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 3. Bağımlılıkları Yükle
+        run: npm ci || npm install
+
+      - name: 4. Üretim Sürümünü Derle (Vite Build)
+        run: npm run build
+
+      - name: 5. Hostinger Sunucusuna Otomatik Aktar (FTP/SFTP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./dist/
+          server-dir: public_html/
+          dangerous-clean-slate: false
